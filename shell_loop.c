@@ -76,7 +76,6 @@ int main(void)
 				free(cmd_arg[0]);
 				cmd_arg[0] = NULL;
 			}
-			printf("the exit value for success is: %d\n", testing);
 		}
 		free(cmd_arg);
 	}
