@@ -22,7 +22,7 @@ char *get_full_path(char **cmd)
 	path_copy = strdup(path);
 	if (path_copy == NULL)
 		return (NULL);
-	dir = strtok(path_copy, ":");
+	dir = str_tok(path_copy, ":");
 	while (dir != NULL)
 	{
 		dir_len = strlen(dir);
@@ -40,7 +40,7 @@ char *get_full_path(char **cmd)
 			return (full_path);
 		}
 		free(full_path);
-		dir = strtok(NULL, ":");
+		dir = str_tok(NULL, ":");
 	}
 	free(path_copy);
 	return (NULL);
