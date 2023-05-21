@@ -64,7 +64,7 @@ int execute_cmd(char **cmd)
 			return (-1);
 		}
 		if (child_pid == 0)
-		{	
+		{
 			if (execve(cmd[0], cmd, env) == -1)
 			{
 				perror("execve");
