@@ -26,8 +26,8 @@ of google:**
 Welcome, to this `simple shell` project!!. This shell can be compiled and launched from the command line
 ### HOW TO COMPILE
 ----
-The shell should be compiled this way:
-`gcc -Wall -Werror -Wextra -pedantic *.c -o hsh
+The shell should be compiled this way:<br>
+`gcc -Wall -Werror -Wextra -pedantic *.c -o hsh`
 ### SYNTAX
 -----
 When using this shell, the syntax for running any command is the same with the syntax for running commands on the
@@ -38,10 +38,10 @@ the bash shell has.
 
 ### COMMANDS
 -----
-This shell supports a few builtin commands:
-`cd` - change directory
-`env` - list the current environment variable
-`exit` - exits the shell
+This shell supports a few builtin commands:<br>
+`cd` - change directory<br>
+`env` - list the current environment variable<br>
+`exit` - exits the shell<br>
 
 The other commands this shell supports are the files contained in the bin file
 
