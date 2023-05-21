@@ -1,5 +1,10 @@
 #include "shell.h"
 
+int (*builtin_func[])(char **, char *) = {
+	&sh_cd,
+	&sh_exit,
+	&sh_env,
+};
 /**
  * _process_cmd - checks if input cmd is a
  * built in and executes it else calls
@@ -7,17 +12,14 @@
  *
  * @cmd: user's cmd passed in from the main
  * loop of the shell
+ * @inp_cmd: command to be freed
  *
  * Return: 0 on success and -1 on error and errno
  * is set appropriately
  */
-int (*builtin_func[])(char **, char *) = {
-	&sh_cd,
-	&sh_exit,
-};
 int _process_cmd(char **cmd, char *inp_cmd)
 {
-	char *builtin_cmd[] = {"cd", "exit"};
+	char *builtin_cmd[] = {"cd", "exit", "env"};
 	int func_len, i;
 
 	if (cmd == NULL)

@@ -5,7 +5,7 @@
  * line management and get the error status
  * of _getline function
  * @nchars: the number of characters expected
- * @inp_cmd - command to be freed
+ * @inp_cmd: command to be freed
  * to be returned by the _getline function
  * Return: 0 in a case of no errors and -1
  */
