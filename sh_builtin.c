@@ -74,7 +74,7 @@ int sh_exit(char **cmd, char *inp)
 			{
 				free(cmd);
 				free(inp);
-				exit (exit_val - 256);
+				exit(exit_val - 256);
 			}
 			if (exit_val < 0)
 				return (1);
