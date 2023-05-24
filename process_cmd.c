@@ -66,12 +66,6 @@ int execute_cmd(char **cmd, char *prog_name, int loop_count)
 
 	if (cmd == NULL)
 		return (-1);
-	if (check_cmd(cmd[0]) == 0)
-	{	cmd[0] = get_full_path(cmd);
-		check_free = 1;
-		if (cmd[0] == NULL)
-			check_free = 0;
-	}
 	if (stat(cmd[0], &cmd_info) == 0)
 	{	child_pid = fork();
 		if (child_pid == -1)
