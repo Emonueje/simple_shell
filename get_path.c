@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * get_full_path - gets the array of path dir of
+ * get_path - gets the array of path dir of
  * the environ variable
  * @path: the original path
  * @path_copy: path copy
@@ -9,10 +9,10 @@
  */
 char **get_path_tokens(char *path, char *path_copy)
 {
-	char **path_tokens, *token; 
-	int token_size = 128, i = 0;
+	char **path_tokens, *token;
+	int len = 128, i = 0;
 
-	path_tokens = malloc(sizeof(char *) * token_size);
+	path_tokens = malloc(sizeof(char *) * len);
 	if (!path_tokens)
 	{
 		perror("./hsh: allocation error\n");
@@ -20,14 +20,14 @@ char **get_path_tokens(char *path, char *path_copy)
 	}
 	strcpy(path_copy, path);
 	token = strtok(path_copy, ":\r\n\a");
-	while(token != NULL)
+	while (token != NULL)
 	{
 		path_tokens[i] = token;
 		i++;
-		if (i >= token_size)
+		if (i >= len)
 		{
-			token_size += 128;
-			path_tokens = _realloc(path_tokens, token_size - 128, token_size *sizeof(char *));
+			len += 128;
+			path_tokens = _realloc(path_tokens, len - 128, len * sizeof(char *));
 			if (!path_tokens)
 			{
 				perror("./hsh: allocation error\n");
