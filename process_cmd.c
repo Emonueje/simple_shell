@@ -17,7 +17,7 @@ int (*builtin_func[])(char **, char *) = {
  * Return: 0 on success and -1 on error and errno
  * is set appropriately
  */
-int _process_cmd(char **cmd, char *inp_cmd)
+int _process_cmd(char **cmd, char *inp_cmd, char *prog_name)
 {
 	char *builtin_cmd[] = {"cd", "exit", "env"};
 	int func_len, i;
@@ -30,7 +30,7 @@ int _process_cmd(char **cmd, char *inp_cmd)
 		if (strcmp(cmd[0], builtin_cmd[i]) == 0)
 			return ((*builtin_func[i])(cmd, inp_cmd));
 	}
-	return (execute_cmd(cmd));
+	return (execute_cmd(cmd, prog_name));
 
 }
 
@@ -43,7 +43,7 @@ int _process_cmd(char **cmd, char *inp_cmd)
  * was allocated for the cmd or not
  * On error -1 is returned
  */
-int execute_cmd(char **cmd)
+int execute_cmd(char **cmd, char *prog_name)
 {
 	pid_t child_pid;
 	char **env = environ;
@@ -81,6 +81,6 @@ int execute_cmd(char **cmd)
 		}
 	}
 	else
-		printf("No such file or directory\n");
+		dprintf(1, "%s: No such file or directory\n", prog_name);
 	return (check_free);
 }

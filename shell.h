@@ -29,8 +29,8 @@ int sh_getc(FILE *stream);
 
 /* definition of utility functions that execute input commands if valid */
 char **_parse_cmd(char *inp_cmd);
-int execute_cmd(char **cmd_arg);
-int _process_cmd(char **cmd, char *inp);
+int execute_cmd(char **cmd_arg, char *prog_name);
+int _process_cmd(char **cmd, char *inp, char *prog_name);
 char *get_full_path(char **cmd);
 int _putchar(char c);
 

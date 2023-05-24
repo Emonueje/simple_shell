@@ -45,7 +45,7 @@ void handle_sigint(int sig)
  * and print the prompt again
  * Return: 0 On success and -1 on Error
  */
-int main(void)
+int main(int ac, char **av)
 {
 	char **cmd_arg;
 	char *inp_cmd = NULL;
@@ -53,6 +53,7 @@ int main(void)
 	ssize_t nchars;
 	int testing;
 
+	(void)ac;
 	signal(SIGINT, handle_sigint);
 	while (1)
 	{
@@ -70,7 +71,7 @@ int main(void)
 		}
 		if (cmd_arg[0] != NULL)
 		{
-			testing = _process_cmd(cmd_arg, inp_cmd);
+			testing = _process_cmd(cmd_arg, inp_cmd, av[0]);
 			if (testing == 1)
 			{
 				free(cmd_arg[0]);
