@@ -1,15 +1,5 @@
 #include "shell.h"
 
-int check_cmd(char *str)
-{
-	int k;
-	for (k = 0; str[k] != '\0'; k++)
-	{
-		if (str[k] == '/')
-			return (0);
-	}
-	return (1);
-}
 /**
  * get_full_path - loops through the path env
  * gets each path_dir, addeds the cmd passed and checks if a full path;
@@ -44,7 +34,7 @@ char *get_full_path(char **cmd)
 			return (NULL);
 		}
 		snprintf(full_path, new_cmd_len, "%s/%s", dir, cmd[0]);
-		if (stat(full_path, &st_buffer) == 0 && check_cmd(cmd[0]) != 0)
+		if (stat(full_path, &st_buffer) == 0)
 		{
 			free(path_copy);
 			return (full_path);

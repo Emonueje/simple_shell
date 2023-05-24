@@ -36,6 +36,16 @@ int _process_cmd(char **cmd, char *inp_cmd, char *prog_name, int loop_count)
 
 }
 
+int check_cmd(char *str)
+{
+	int k;
+	for (k = 0; str[k] != 0; k++)
+	{
+		if (str[k] == '/')
+			return (1);
+	}
+	return (0);
+}
 /**
  * execute_cmd - executes commands that
  * are not built-ins
@@ -56,7 +66,7 @@ int execute_cmd(char **cmd, char *prog_name, int loop_count)
 
 	if (cmd == NULL)
 		return (-1);
-	if (stat(cmd[0], &cmd_info) != 0)
+	if (check_cmd(cmd[0]) == 0)
 	{	cmd[0] = get_full_path(cmd);
 		check_free = 1;
 		if (cmd[0] == NULL)
