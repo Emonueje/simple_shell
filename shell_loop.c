@@ -37,6 +37,8 @@ void handle_sigint(int sig)
 }
 /**
  * main - entry point of the shell
+ * @ac: argument count
+ * @av: argument vector
  *
  * prints a prompt
  * get users input
@@ -51,7 +53,7 @@ int main(int ac, char **av)
 	char *inp_cmd = NULL;
 	size_t len = 0;
 	ssize_t nchars;
-	int testing;
+	int testing, loop_count = 1; /* adding the loop count */
 
 	(void)ac;
 	signal(SIGINT, handle_sigint);
@@ -71,7 +73,7 @@ int main(int ac, char **av)
 		}
 		if (cmd_arg[0] != NULL)
 		{
-			testing = _process_cmd(cmd_arg, inp_cmd, av[0]);
+			testing = _process_cmd(cmd_arg, inp_cmd, av[0], loop_count);
 			if (testing == 1)
 			{
 				free(cmd_arg[0]);
@@ -79,6 +81,7 @@ int main(int ac, char **av)
 			}
 		}
 		free(cmd_arg);
+		loop_count += 1;
 	}
 	free(inp_cmd);
 	return (0);

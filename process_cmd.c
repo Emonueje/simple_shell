@@ -13,11 +13,13 @@ int (*builtin_func[])(char **, char *) = {
  * @cmd: user's cmd passed in from the main
  * loop of the shell
  * @inp_cmd: command to be freed
+ * @loop_count: for error message
+ * @prog_name: for error message
  *
  * Return: 0 on success and -1 on error and errno
  * is set appropriately
  */
-int _process_cmd(char **cmd, char *inp_cmd, char *prog_name)
+int _process_cmd(char **cmd, char *inp_cmd, char *prog_name, int loop_count)
 {
 	char *builtin_cmd[] = {"cd", "exit", "env"};
 	int func_len, i;
@@ -30,7 +32,7 @@ int _process_cmd(char **cmd, char *inp_cmd, char *prog_name)
 		if (strcmp(cmd[0], builtin_cmd[i]) == 0)
 			return ((*builtin_func[i])(cmd, inp_cmd));
 	}
-	return (execute_cmd(cmd, prog_name));
+	return (execute_cmd(cmd, prog_name, loop_count));
 
 }
 
@@ -38,12 +40,14 @@ int _process_cmd(char **cmd, char *inp_cmd, char *prog_name)
  * execute_cmd - executes commands that
  * are not built-ins
  * @cmd: the command to be executed
+ * @prog_name: for error message
+ * @loop_count: for error message
  *
  * Return: an int indicating if memory
  * was allocated for the cmd or not
  * On error -1 is returned
  */
-int execute_cmd(char **cmd, char *prog_name)
+int execute_cmd(char **cmd, char *prog_name, int loop_count)
 {
 	pid_t child_pid;
 	char **env = environ;
@@ -69,7 +73,8 @@ int execute_cmd(char **cmd, char *prog_name)
 		{
 			if (execve(cmd[0], cmd, env) == -1)
 			{
-				perror("execve");
+				/* changed error msg */
+				dprintf(1, "%s: %d: Permission denied\n", prog_name, loop_count);
 				free(cmd[0]);
 				free(cmd);
 				exit(EXIT_FAILURE);
@@ -81,6 +86,6 @@ int execute_cmd(char **cmd, char *prog_name)
 		}
 	}
 	else
-		dprintf(1, "%s: No such file or directory\n", prog_name);
+		dprintf(1, "%s: %d: Not found\n", prog_name, loop_count); /* here too */
 	return (check_free);
 }
