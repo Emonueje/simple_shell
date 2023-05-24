@@ -36,7 +36,7 @@ char **_parse_cmd(char *inp_cmd)
 	av = malloc(sizeof(char *) * av_size);
 	if (error_av(av) == NULL)
 		return (NULL);
-	token = str_tok(inp_cmd, delim);
+	token = strtok(inp_cmd, delim);
 	while (token != NULL)
 	{
 		av[i] = token;
@@ -48,7 +48,7 @@ char **_parse_cmd(char *inp_cmd)
 			if (error_av(av) == NULL)
 			return (NULL);
 		}
-		token = str_tok(NULL, delim);
+		token = strtok(NULL, delim);
 	}
 	av[i] = NULL;
 	return (av);
