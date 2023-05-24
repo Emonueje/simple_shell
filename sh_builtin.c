@@ -70,6 +70,14 @@ int sh_exit(char **cmd, char *inp)
 		if (check_exit_val(cmd[1]) == 0)
 		{
 			exit_val = atoi(cmd[1]);
+			if (exit_val >= 256)
+			{
+				free(cmd);
+				free(inp);
+				exit (exit_val - 256);
+			}
+			if (exit_val < 0)
+				return (1);
 			free(cmd);
 			free(inp);
 			exit(exit_val);
