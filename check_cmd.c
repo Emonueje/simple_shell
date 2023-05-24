@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * 1alloc_error - helps reduce program lines
+ * alloc_errors - helps reduce program lines
  * @new_cmd: the inp to handle
  * Return: On error -1
  */
@@ -12,11 +12,11 @@ int alloc_errors(char *new_cmd)
 		perror("./hsh: allocation error\n");
 		return (-1);
 	}
-	return 0;
+	return (0);
 }
 
 /**
- * 2alloc_error - helps me reduce function lines
+ * alloc_err - helps me reduce function lines
  * @new_cmd: address
  * @buffer: to check
  * Return: On error -1
@@ -29,7 +29,7 @@ int alloc_err(char *buffer, char *new_cmd)
 		perror("./hsh: allocation error\n");
 		return (-1);
 	}
-	return 0;
+	return (0);
 }
 /**
  * free_them1 - frees up allocated memory
@@ -57,19 +57,16 @@ void free_them2(char *mem1, char **mem2, char *mem3)
 	free(mem3);
 }
 /**
- * check_cmd - function to process
- * the input command
+ *_check_cmd - function to process the input command
  * @cmd: the array of input
  * @prog_name: for error messages
  * @loop_count: for error msg
  * @flag: to check if mem was allocated
- * Return: an array of processed input command
- * or NULL on failure
+ * Return: an array of processed input command or NULL on failure
  */
 char **_check_cmd(char **cmd, char *prog_name, int loop_count, int *flag)
 {
-	char *new_cmd, **path_tokens;
-	char *path, *path_copy;
+	char *new_cmd, **path_tokens, *path, *path_copy;
 	int k, b;
 
 	for (k = 0; *(cmd[0] + k) != '\0'; k++) /* handle the "/" errors */
@@ -98,7 +95,7 @@ char **_check_cmd(char **cmd, char *prog_name, int loop_count, int *flag)
 		else
 			strcat(new_cmd, "./");
 		strcat(new_cmd, cmd[0]);
-		if (access(new_cmd , X_OK) != -1)
+		if (access(new_cmd, X_OK) != -1)
 		{
 			cmd[0] = new_cmd;
 			*flag = 1;
