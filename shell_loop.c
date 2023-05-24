@@ -53,33 +53,25 @@ int main(int ac, char **av)
 	char *inp_cmd = NULL;
 	size_t len = 0;
 	ssize_t nchars;
-	int testing, loop_count = 1; /* adding the loop count */
+	int loop_count = 1, status = 1; /* adding the loop count */
 
 	(void)ac;
 	signal(SIGINT, handle_sigint);
-	while (1)
+	while (status == 1)
 	{
 		fflush(stdout);
 		if (isatty(STDIN_FILENO) != 0)
 			printf("cisfun~$ ");
 		nchars = _getline(&inp_cmd, &len, stdin);
 		if (get_error(nchars, inp_cmd) == -1)
-			return (-1);
+			return (0);
 		cmd_arg = _parse_cmd(inp_cmd);
 		if (cmd_arg == NULL)
 		{
-			free(cmd_arg);
-			return (-1);
+			free(inp_cmd);
+			return (0);
 		}
-		if (cmd_arg[0] != NULL)
-		{
-			testing = _process_cmd(cmd_arg, inp_cmd, av[0], loop_count);
-			if (testing == 1)
-			{
-				free(cmd_arg[0]);
-				cmd_arg[0] = NULL;
-			}
-		}
+		status = _process_cmd(cmd_arg, inp_cmd, av[0], loop_count);
 		free(cmd_arg);
 		loop_count += 1;
 	}

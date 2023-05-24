@@ -11,7 +11,7 @@ char **error_av(char **av)
 {
 	if (av == NULL)
 	{
-		free(av);
+		perror("./hsh: allocation error\n");
 		return (NULL);
 	}
 	return (av);
@@ -31,7 +31,7 @@ char **_parse_cmd(char *inp_cmd)
 {
 	char **av, *token; /* av refers to tokens that stores each token */
 	char *delim = " \t\r\n\a";
-	int i = 0, av_size = 128;
+	int i = 0, av_size = 64;
 
 	av = malloc(sizeof(char *) * av_size);
 	if (error_av(av) == NULL)
@@ -43,8 +43,8 @@ char **_parse_cmd(char *inp_cmd)
 		i++;
 		if (i >= av_size)
 		{
-			av_size *= 2;
-			av = _realloc(av, (av_size / 2), av_size);
+			av_size += 64;
+			av = _realloc(av, (av_size - 64), av_size * sizeof(char *));
 			if (error_av(av) == NULL)
 			return (NULL);
 		}

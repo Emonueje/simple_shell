@@ -24,8 +24,8 @@ int _process_cmd(char **cmd, char *inp_cmd, char *prog_name, int loop_count)
 	char *builtin_cmd[] = {"cd", "exit", "env"};
 	int func_len, i;
 
-	if (cmd == NULL)
-		return (-1);
+	if (cmd[0] == NULL)
+		return (1);
 	func_len = sizeof(builtin_cmd) / sizeof(char *);
 	for (i = 0; i < func_len; i++)
 	{
@@ -60,36 +60,37 @@ int check_cmd(char *str)
 int execute_cmd(char **cmd, char *prog_name, int loop_count)
 {
 	pid_t child_pid;
-	char **env = environ;
 	int status, check_free = 0;
-	struct stat cmd_info;
 
+	cmd = _check_cmd(cmd, prog_name, loop_count, &check_free);
 	if (cmd == NULL)
+		return (1);
+
+	child_pid = fork();
+	if (child_pid < 0)
+	{
+		perror("Error:");
 		return (-1);
-	if (stat(cmd[0], &cmd_info) == 0)
-	{	child_pid = fork();
-		if (child_pid == -1)
+	}
+	else if (child_pid == 0)
+	{
+		if (execve(cmd[0], cmd, environ) == -1)
 		{
-			perror("Error:");
-			return (-1);
-		}
-		if (child_pid == 0)
-		{
-			if (execve(cmd[0], cmd, env) == -1)
-			{
-				/* changed error msg */
-				dprintf(1, "%s: %d: Permission denied\n", prog_name, loop_count);
+			/* changed error msg */
+			dprintf(1, "%s: %d: ", prog_name, loop_count);
+			perror("execve");
+			if (check_free == 1)
 				free(cmd[0]);
-				free(cmd);
-				exit(EXIT_FAILURE);
-			}
-		}
-		else
-		{
-			wait(&status);
+			return (-1);
 		}
 	}
 	else
-		dprintf(1, "%s: %d: Not found\n", prog_name, loop_count); /* here too */
-	return (check_free);
+	{
+		do{
+			waitpid(child_pid, &status, WUNTRACED);
+		}while (!WIFEXITED(status) && !WIFSIGNALED(status));
+	}
+	if (check_free == 1)
+		free(cmd[0]);
+	return (1);
 }
