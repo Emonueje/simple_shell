@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * get_path - gets the array of path dir of
+ * get_path_tokens - gets the array of path dir of
  * the environ variable
  * @path: the original path
  * @path_copy: path copy
