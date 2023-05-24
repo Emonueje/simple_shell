@@ -36,16 +36,6 @@ int _process_cmd(char **cmd, char *inp_cmd, char *prog_name, int loop_count)
 
 }
 
-int check_cmd(char *str)
-{
-	int k;
-	for (k = 0; str[k] != 0; k++)
-	{
-		if (str[k] == '/')
-			return (1);
-	}
-	return (0);
-}
 /**
  * execute_cmd - executes commands that
  * are not built-ins
@@ -86,9 +76,9 @@ int execute_cmd(char **cmd, char *prog_name, int loop_count)
 	}
 	else
 	{
-		do{
+		do {
 			waitpid(child_pid, &status, WUNTRACED);
-		}while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 	if (check_free == 1)
 		free(cmd[0]);
