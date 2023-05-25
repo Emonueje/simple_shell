@@ -67,7 +67,7 @@ int sh_exit(char **cmd, char *inp)
 	}
 	else
 	{
-		if (check_exit_val(cmd[1]) == 0)
+		if (check_exit_val(cmd[1]) == 1)
 		{
 			exit_val = atoi(cmd[1]);
 			if (exit_val >= 256)
