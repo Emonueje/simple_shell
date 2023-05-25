@@ -4,6 +4,8 @@ int (*builtin_func[])(char **, char *) = {
 	&sh_cd,
 	&sh_exit,
 	&sh_env,
+	&sh_setenv,
+	&sh_unsetenv
 };
 /**
  * _process_cmd - checks if input cmd is a
@@ -21,7 +23,7 @@ int (*builtin_func[])(char **, char *) = {
  */
 int _process_cmd(char **cmd, char *inp_cmd, char *prog_name, int loop_count)
 {
-	char *builtin_cmd[] = {"cd", "exit", "env"};
+	char *builtin_cmd[] = {"cd", "exit", "env", "setenv", "unsetenv"};
 	int func_len, i;
 
 	if (cmd[0] == NULL)

@@ -39,6 +39,8 @@ int _putchar(char c);
 int sh_cd(char **cmd, char *inp);
 int sh_exit(char **cmd, char *inp);
 int sh_env(char **cmd, char *inp);
+int sh_setenv(char **cmd, char *inp);
+int sh_unsetenv(char **cmd, char *inp);
 
 /* definition of funcition used for accessing the environment */
 char *_getenv(const char *env_name);

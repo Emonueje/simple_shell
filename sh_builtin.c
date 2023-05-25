@@ -24,7 +24,7 @@ int sh_cd(char **cmd, char *inp)
 			perror("chdir");
 		}
 	}
-	return (0);
+	return (1);
 }
 
 /**
@@ -45,7 +45,7 @@ int check_exit_val(char *exit_str)
 		else
 			return (-1);
 	}
-	return (0);
+	return (1);
 }
 
 /**
@@ -77,7 +77,7 @@ int sh_exit(char **cmd, char *inp)
 				exit(exit_val - 256);
 			}
 			if (exit_val < 0)
-				return (1);
+				return (0);
 			free(cmd);
 			free(inp);
 			exit(exit_val);
@@ -85,7 +85,7 @@ int sh_exit(char **cmd, char *inp)
 		else
 			dprintf(2, "Illegal number: %s\n", cmd[1]);
 	}
-	return (0);
+	return (1);
 
 }
 /**
@@ -104,5 +104,5 @@ int sh_env(char **cmd, char *inp)
 	{
 		dprintf(STDOUT_FILENO, "%s\n", environ[i]);
 	}
-	return (0);
+	return (1);
 }
