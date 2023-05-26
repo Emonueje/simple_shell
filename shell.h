@@ -32,7 +32,7 @@ char **_parse_cmd(char *inp_cmd);
 int execute_cmd(char **cmd_arg, char *prog_name, int loop_count);
 int _process_cmd(char **cmd, char *inp, char *prog_name, int loop_count);
 char **_check_cmd(char **cmd, char *prog_name, int loop_count, int *flag);
-char **get_path_tokens(char *path, char *path_copy); 
+char **get_path_tokens(char *path, char *path_copy);
 int _putchar(char c);
 
 /* definition of builtin commands */
