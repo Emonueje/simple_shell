@@ -53,34 +53,38 @@ int execute_cmd(char **cmd, char *prog_name, int loop_count)
 {
 	pid_t child_pid;
 	int status, check_free = 0;
+	struct stat st_nd;
 
 	cmd = _check_cmd(cmd, prog_name, loop_count, &check_free);
 	if (cmd == NULL)
 		return (1);
 
-	child_pid = fork();
-	if (child_pid < 0)
+	if (stat(cmd[0], &st_nd) == 0)
 	{
-		perror("Error:");
-		return (-1);
-	}
-	else if (child_pid == 0)
-	{
-		if (execve(cmd[0], cmd, environ) == -1)
+		child_pid = fork();
+		if (child_pid < 0)
 		{
-			/* changed error msg */
-			dprintf(1, "%s: %d: ", prog_name, loop_count);
-			perror("execve");
-			if (check_free == 1)
-				free(cmd[0]);
+			perror("Error:");
 			return (-1);
 		}
-	}
-	else
-	{
-		do {
-			waitpid(child_pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		else if (child_pid == 0)
+		{
+			if (execve(cmd[0], cmd, environ) == -1)
+			{
+				/* changed error msg */
+				dprintf(1, "%s: %d: ", prog_name, loop_count);
+				perror("execve");
+				if (check_free == 1)
+					free(cmd[0]);
+				return (-1);
+			}
+		}
+		else
+		{
+			do {
+				waitpid(child_pid, &status, WUNTRACED);
+			} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+		}
 	}
 	if (check_free == 1)
 		free(cmd[0]);
